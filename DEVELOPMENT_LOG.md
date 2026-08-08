@@ -1,0 +1,29 @@
+# DEVELOPMENT LOG — Faino Clean
+
+## 2026-08-08 — Ініціалізація проєкту, Фаза 1 (сайт + форма)
+
+**Контекст:** Новий, повністю окремий репозиторій (не форк і не калька проєкту Importica). Дизайн-система і структура сторінки — з ТЗ користувача. Перед стартом переглянуто репозиторій `Daniil4449/importica` як референс *інфраструктурних патернів* (SEO, деплой, форми) — дизайн і код не копіювались.
+
+**Погоджений план (послідовно, фазами):**
+1. ✅ Фаза 1 — сайт на чистому HTML/CSS/JS + Formsubmit для форми (без бекенду) + базове SEO + GitHub Pages
+2. ⏳ Фаза 2 — Google Sheets webhook (Apps Script) для збору заявок у таблицю
+3. ⏳ Фаза 3 — Telegram-бот через існуючий акаунт Make.com (окремий номер/бот від Importica)
+4. ⏳ Фаза 4 — підключення домену fainoclean.com.ua (Cloudflare DNS, той самий підхід що і importica.com.ua)
+
+**Що зроблено у Фазі 1:**
+- `index.html` — повна структура: header (sticky) → hero → стрічка типів об'єктів (6) → послуги (плоский список, 6) → "чому ми" (темна секція, 5 пунктів) → історія (2013 → 2014 Київ) → контакти + форма → footer
+- Дизайн-система: OKLCH-палітра, Playfair Display (заголовки) + Outfit (текст) з Google Fonts, тонкі лінійні SVG-іконки (без кольорових підложок), без нумерації розділів 01/02/03
+- Анімації: scroll-reveal (fade + translateY), transitions 100–160ms ease-out, `prefers-reduced-motion` враховано
+- Доступність: `:focus-visible`, мобільна адаптивність (breakpoints 880px / 560px)
+- SEO: title/description/keywords, canonical, Open Graph + Twitter Card, JSON-LD `LocalBusiness`, `robots.txt`, `sitemap.xml`, `og-image.svg` (1200×630, брендоване)
+- Форма заявки: Formsubmit.co, POST у прихований iframe (щоб не покидати сторінку), inline статус успіху
+- Деплой: `.github/workflows/deploy.yml` (GitHub Actions → GitHub Pages), `CNAME` → fainoclean.com.ua
+
+**Що потребує ручних дій користувача (не може зробити Claude Code):**
+- [ ] **Formsubmit активація**: перший лист на `cleanandclear4449@gmail.com` від Formsubmit міститиме посилання підтвердження — його треба один раз відкрити, інакше форма не працюватиме
+- [ ] **GA4**: створити властивість в Google Analytics → отримати Measurement ID (`G-XXXXXXXXXX`) → вставити в `<head>` замість коментаря-заглушки
+- [ ] **GitHub repo**: створити репозиторій, увімкнути GitHub Pages у Settings → Pages → Source: GitHub Actions
+- [ ] **Домен**: перевести DNS fainoclean.com.ua з imena.ua на Cloudflare (як зроблено для importica.com.ua), додати A/CNAME записи на GitHub Pages
+- [ ] **Google Search Console**: підключити після деплою на реальний домен, відправити sitemap.xml
+
+**Наступний крок:** створити GitHub-репозиторій `faino-clean`, запушити код, після підтвердження від користувача — переходити до Фази 2 (Google Sheets).
