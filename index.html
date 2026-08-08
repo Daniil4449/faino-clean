@@ -37,7 +37,7 @@
   --ink: oklch(24% 0.045 155);
   --ink-soft: oklch(38% 0.03 150);
   --line: oklch(85% 0.02 150);
-  --accent: oklch(30% 0.06 155);
+  --accent: #1B6E3C;
   --dark: oklch(17% 0.025 155);
   --paper: oklch(98% 0.006 100);
   --dur: 140ms;
@@ -210,6 +210,12 @@ footer{padding:2.5rem 0;}
   .strip-grid{grid-template-columns:repeat(2,1fr);}
   .header-inner{height:64px;}
   .hero{padding:3rem 0 3rem;}
+}
+@media (max-width: 380px){
+  .wrap{padding:0 1.1rem;}
+  .hero-visual{max-width:200px;}
+  .logo-img{height:38px;}
+  .btn{padding:0.65rem 1.15rem;font-size:0.88rem;}
 }
 </style>
 </head>
