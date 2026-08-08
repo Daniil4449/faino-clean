@@ -217,6 +217,25 @@ footer{padding:2.5rem 0;}
   .logo-img{height:38px;}
   .btn{padding:0.65rem 1.15rem;font-size:0.88rem;}
 }
+
+/* STICKY MOBILE CTA */
+.sticky-cta{display:none;}
+@media (max-width: 560px){
+  .sticky-cta{
+    display:block;position:fixed;left:0;right:0;bottom:0;z-index:90;
+    padding:0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom));
+    background:color-mix(in oklch, var(--bg) 94%, transparent);
+    backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    transform:translateY(100%);opacity:0;
+    transition:transform 0.25s ease-out, opacity 0.25s ease-out;
+  }
+  .sticky-cta.show{transform:translateY(0);opacity:1;}
+  .sticky-cta .btn{width:100%;}
+}
+@media (prefers-reduced-motion: reduce){
+  .sticky-cta{transition:none;}
+}
 </style>
 </head>
 <body>
@@ -445,6 +464,13 @@ footer{padding:2.5rem 0;}
 
 </main>
 
+<div class="sticky-cta" id="stickyCta">
+  <a href="tel:+380951915964" class="btn btn-primary">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="17" height="17"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2C9.6 21 3 14.4 3 6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    Зателефонувати
+  </a>
+</div>
+
 <footer>
   <div class="wrap footer-inner">
     <span class="logo-text">Faino Clean</span>
@@ -483,6 +509,16 @@ if ('IntersectionObserver' in window) {
   reveals.forEach(el => io.observe(el));
 } else {
   reveals.forEach(el => el.classList.add('in'));
+}
+
+// Sticky mobile CTA — show once hero buttons scroll out of view
+const stickyCta = document.getElementById('stickyCta');
+const heroBtns = document.querySelector('.hero-btns');
+if (stickyCta && heroBtns && 'IntersectionObserver' in window) {
+  const ctaObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => stickyCta.classList.toggle('show', !e.isIntersecting));
+  }, { threshold: 0 });
+  ctaObserver.observe(heroBtns);
 }
 
 // Lead form — hidden-iframe submit + inline status
