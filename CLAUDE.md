@@ -14,12 +14,17 @@
 
 ```
 faino-clean/
-├── index.html          ← ЄДИНИЙ файл сайту (весь HTML, CSS, JS всередині)
+├── index.html               ← ЄДИНИЙ файл сайту (весь HTML, CSS, JS всередині)
+├── logo-green.svg            ← фінальне лого (шапка, hero) — не перемальовувати
+├── logo-black.svg            ← запасний варіант, поки не використовується на сайті
+├── logo-building-green.svg   ← тільки іконка будівлі (favicon)
+├── favicon.svg
 ├── robots.txt
 ├── sitemap.xml
 ├── og-image.svg
 ├── CNAME                ← fainoclean.com.ua
 ├── CLAUDE.md
+├── context.md           ← знімок стану для Claude.ai Project Knowledge
 ├── DEVELOPMENT_LOG.md   ← історія рішень по сесіях, звіряти тут перед новою сесією
 ├── README.md
 └── .github/workflows/deploy.yml
@@ -33,7 +38,7 @@ faino-clean/
 --ink: oklch(24% 0.045 155)
 --ink-soft: oklch(38% 0.03 150)
 --line: oklch(85% 0.02 150)
---accent: oklch(30% 0.06 155)
+--accent: #1A5E33
 --dark: oklch(17% 0.025 155)
 --paper: oklch(98% 0.006 100)
 ```
@@ -45,11 +50,12 @@ faino-clean/
 
 | Що | Де / Як |
 |----|---------|
-| Хостинг | GitHub Pages, репозиторій `faino-clean` |
-| Домен | fainoclean.com.ua (реєстратор Imena.ua, DNS → Cloudflare, план) |
-| Форма | Formsubmit.co → cleanandclear4449@gmail.com, POST у прихований iframe |
-| Аналітика | GA4 — заплановано, ID ще не вставлено |
-| Google Sheets / Telegram-бот | Заплановано на Фазу 2–3 (див. DEVELOPMENT_LOG.md) |
+| Хостинг | ✅ GitHub Pages, репозиторій `Daniil4449/faino-clean`, auto-deploy |
+| Домен | ⏳ fainoclean.com.ua (реєстратор Imena.ua, DNS → Cloudflare — Фаза 4) |
+| Форма | ✅ Formsubmit.co → cleanandclear4449@gmail.com, POST у прихований iframe |
+| Google Sheets | ✅ "Faino Clean — Ліди" через Apps Script webhook — деталі в context.md |
+| Аналітика GA4 | ⏳ заплановано, ID ще не вставлено |
+| Telegram-бот | ⏳ Фаза 3, через Make.com (окремий бот/номер від Importica) |
 
 ## Правила
 
