@@ -54,3 +54,16 @@
 - Додано sticky-панель з кнопкою "Зателефонувати", що з'являється на екранах ≤560px після того, як hero-кнопки скролом зникають з поля зору (IntersectionObserver), ховається знову при поверненні нагору.
 
 **Наступний крок:** Фаза 2 — Google Sheets webhook для збору заявок.
+
+## 2026-08-09 — Прибрано послугу, Фаза 2 (Google Sheets) завершена
+
+**Прибирання після ремонту** видалено зі списку послуг і з JSON-LD `serviceType` — за словами користувача, це послуга для майбутнього окремого напрямку "Faino Clean Home" (приватні квартири), не для поточного B2B-профілю.
+
+**Фаза 2 — Google Sheets:** користувач самостійно (за покроковою інструкцією в чаті) створив таблицю "Faino Clean — Ліди" на акаунті `cleanandclear4449@gmail.com`, вставив Apps Script (`doPost` → `appendRow`) і задеплоїв як Web App ("Виконати як: я", "Хто має доступ: усі"). Отриманий webhook URL:
+`https://script.google.com/macros/s/AKfycbx_i2C8fhK9aeZoHFoESG6Ze_sm-Rplt13OTlN6eo5hfSvCMt93GtsLn8YId7VbPwGQ/exec`
+
+Вплетено в `index.html`: при сабміті форми JS одночасно (1) POST'ить на Formsubmit (як і раніше, email) і (2) шле `fetch(SHEETS_WEBHOOK, {mode:'no-cors', body: JSON.stringify({name, phone, type, comment})})` — fire-and-forget, не блокує і не залежить від Formsubmit. Колонки в таблиці: Дата, Час, Ім'я, Телефон, Тип об'єкта, Коментар (дата/час проставляє сам Apps Script на боці Google, timezone Europe/Kyiv).
+
+**Перевірено end-to-end:** тестова заявка через живий сайт (daniil4449.github.io/faino-clean) успішно долетіла в таблицю з коректними даними. Тестовий рядок користувач видаляє сам.
+
+**Наступний крок:** Фаза 3 — Telegram-бот через Make.com (окремий бот/номер від Importica).
