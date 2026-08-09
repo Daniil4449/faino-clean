@@ -525,9 +525,20 @@ if (stickyCta && heroBtns && 'IntersectionObserver' in window) {
 const form = document.getElementById('lead-form');
 const status = document.getElementById('form-status');
 const frame = document.querySelector('iframe[name="fs-frame"]');
+const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbx_i2C8fhK9aeZoHFoESG6Ze_sm-Rplt13OTlN6eo5hfSvCMt93GtsLn8YId7VbPwGQ/exec';
 let submitted = false;
 form.addEventListener('submit', () => {
   submitted = true;
+  fetch(SHEETS_WEBHOOK, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({
+      name: document.getElementById('f-name').value,
+      phone: document.getElementById('f-phone').value,
+      type: document.getElementById('f-type').value,
+      comment: document.getElementById('f-msg').value
+    })
+  }).catch(() => {});
 });
 frame.addEventListener('load', () => {
   if (!submitted) return;
