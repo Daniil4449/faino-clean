@@ -1,6 +1,6 @@
 # Faino Clean — Project Knowledge
 
-**Оновлено:** 09.08.2026 (сесія 2 — виправлення лого, кольору, адаптивності; Фаза 2 Google Sheets завершена)
+**Оновлено:** 10.08.2026 (сесія 3 — виправлено Formsubmit: форма не пересилала листи через неактивований акаунт; знайдено перший реальний лід)
 
 ---
 
@@ -40,7 +40,7 @@
 | Хостинг | ✅ | GitHub Pages, auto-deploy через GitHub Actions при push в `main` |
 | Домен | ⏳ | fainoclean.com.ua зареєстрований на Imena.ua, DNS ще не переведено |
 | DNS/SSL | ⏳ | Заплановано: Cloudflare, той самий підхід що і importica.com.ua (Фаза 4) |
-| Форма заявки | ✅ | Formsubmit.co → cleanandclear4449@gmail.com, POST у прихований iframe |
+| Форма заявки | ✅ | Formsubmit.co (hash-endpoint `e457095c35f1def47c16dc7fafbcc492` → cleanandclear4449@gmail.com), POST у прихований iframe. Активовано 10.08.2026 — до цього листи не доходили (потрібне одноразове підтвердження email від Formsubmit), заявки губились. Перевірено end-to-end. |
 | Google Sheets (Ліди) | ✅ | "Faino Clean — Ліди" на акаунті cleanandclear4449@gmail.com, через Apps Script webhook |
 | Telegram-бот | ⏳ | Фаза 3 — заплановано через існуючий Make.com акаунт користувача (окремий бот/номер від Importica) |
 | Google Analytics GA4 | ⏳ | Не підключено — потрібен Measurement ID від користувача |
@@ -70,6 +70,7 @@ function doPost(e) {
 ```
 - **В index.html:** при сабміті форми JS одночасно шле на Formsubmit (email) і `fetch(webhook, {mode:'no-cors', body: JSON.stringify({name, phone, type, comment})})` — незалежно одне від одного, fire-and-forget.
 - Перевірено end-to-end тестовою заявкою через живий сайт — рядок коректно з'явився в таблиці.
+- **Перший реальний лід (09.08.2026, до фіксу Formsubmit):** Дамір, виробниче приміщення, 1000 кв м, тел. 502313652 — знайдено в таблиці Google Sheets (Sheets працювали навіть коли email ще не пересилав). Продубльований рядок (подвійний клік по кнопці) — відомий дрібний дефект, обговорюється захист від повторного сабміту (disable кнопки після кліку), поки не реалізовано.
 
 ---
 
