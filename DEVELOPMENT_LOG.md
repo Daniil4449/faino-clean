@@ -120,3 +120,17 @@ DNS домену fainoclean.com.ua переведено на Cloudflare (Free п
 ## 2026-08-21 — Сесія 7: домен готовий, баг форми виправлено
 
 **Фаза 4 завершена:** fainoclean.com.ua повністю робочий, SSL-сертифікат від GitHub Pages видано, сайт відкривається без попереджень браузера. **Баг форми закрито:** причина була саме та, що передбачалась — активація Formsubmit прив'язана до конкретного домену, тож перехід з daniil4449.github.io на fainoclean.com.ua вимагав повторної активації. Переактивовано, перевірено end-to-end одночасно на обох каналах (email + Google Sheets) — обидва підтверджені робочими. Telegram-маршрутизація (Фаза 3) лишається на паузі, зупинено на кроці створення нового сценарію "Faino Clean — Нова заявка → Telegram" в Make.com (натиснуто "+ Create scenario", далі не пішли).
+
+## 2026-08-22 — Сесія 8: Фаза 3 завершена — Telegram-маршрутизація повністю робоча
+
+Довели до кінця маршрут "нова заявка з сайту → нова тема в Telegram-групі":
+
+- Сценарій **"Faino Clean — Нова заявка → Telegram"** в Make.com, 3 модулі: `Webhooks (Custom webhook)` → `Telegram Bot (Make an API Call → createForumTopic)` → `Telegram Bot (Send a Text Message or a Reply)`, в тему через `message_thread_id` з відповіді попереднього кроку.
+- Webhook URL: `https://hook.eu1.make.com/o1kr4v95snvbdhg7okdt6pgq6km5jnx1` — вбудований у `TELEGRAM_WEBHOOK` в `index.html`.
+- Тригер переведено на **"Immediately as data arrives"** (миттєвий, той самий підхід, що й у Importica) — сценарій активний, не потребує ручного запуску.
+
+**Знайдено і виправлено критичний баг:** перша спроба (JSON.stringify тіла) провалилась з реального сайту — `[400] Bad Request: name must be non-empty`. Причина: `fetch()` з `mode: 'no-cors'` не може реально виставити `Content-Type: application/json` (браузер мовчки ігнорує цей заголовок для no-cors-запитів, лишає `text/plain`), тому Make не міг розпарсити JSON-тіло на іменовані поля — хоча ручні `curl`-тести з явним заголовком проходили без проблем, і саме тому баг не проявився одразу. Виправлено переходом на `new URLSearchParams(leadData)` як тіло запиту — це єдиний формат (`application/x-www-form-urlencoded`), який браузер дозволяє коректно позначити навіть у no-cors-режимі. Google Sheets webhook цю проблему не мав, бо Apps Script сам парсить сирий текст через `JSON.parse()` незалежно від заголовка.
+
+**Перевірено end-to-end з реального домену fainoclean.com.ua:** тестова заявка "ПОВНА ПЕРЕВІРКА ФІНАЛ" одночасно прийшла на email (Formsubmit), у Google Таблицю і створила нову тему в Telegram-групі з коректними даними (включно з кирилицею).
+
+**Фазу 3 закрито.** Лишається на майбутнє (не блокує поточну роботу): маршрут "відповідь у темі → приват клієнту" (потребує зберігати `message_thread_id` в Google Sheets, як в Importica), команди /start /help, фільтри за Chat ID.
