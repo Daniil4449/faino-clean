@@ -569,7 +569,10 @@ form.addEventListener('submit', (e) => {
     comment: document.getElementById('f-msg').value
   };
   fetch(SHEETS_WEBHOOK, { method: 'POST', mode: 'no-cors', body: JSON.stringify(leadData) }).catch(() => {});
-  fetch(TELEGRAM_WEBHOOK, { method: 'POST', mode: 'no-cors', body: JSON.stringify(leadData) }).catch(() => {});
+  // Make.com's webhook needs application/x-www-form-urlencoded (the only
+  // Content-Type a no-cors fetch can actually send) to parse named fields —
+  // JSON.stringify() defaults to text/plain, which arrives as an empty body.
+  fetch(TELEGRAM_WEBHOOK, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(leadData) }).catch(() => {});
 
   // Re-enable after the submission has had time to go through, so a visitor
   // can still send a second, separate inquiry without reloading the page.
