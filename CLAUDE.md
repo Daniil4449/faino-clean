@@ -10,6 +10,17 @@
 
 **Це окремий, незалежний проєкт** — не форк і не похідна від `Daniil4449/importica`. Деякі інфраструктурні патерни (SEO-теги, GitHub Pages деплой, Formsubmit) підглянуті звідти як перевірений підхід, але дизайн і контент — власні, під затверджену дизайн-систему Faino Clean.
 
+## ⚠️ Правило роботи: усі зміни коду/файлів — тільки через Claude Code
+
+Користувач прямо попросив (сесія 24.08.2026): будь-яку задачу на зміну коду чи файлів виконує Claude Code (ти), а не сам користувач вручну — щоб уникнути помилок. Якщо задача вимагає дій у зовнішніх вебінтерфейсах (Google Analytics, Search Console, Cloudflare dashboard тощо, поза репозиторієм) — це єдиний виняток, там користувач діє сам за покроковою інструкцією.
+
+## ⚠️ Два окремі акаунти Cloudflare — не переплутати
+
+- **daniilka4449@gmail.com** (особиста пошта) → домен **importica.com.ua** (проєкт Importica)
+- **cleanandclear4449@gmail.com** (бізнес-пошта Faino Clean) → домен **fainoclean.com.ua**
+
+Той самий поділ і в Google-акаунтах для GA4/Search Console — обидва сервіси Faino Clean підключені на **cleanandclear4449@gmail.com** (той самий Google-акаунт, де вже був ресурс Importica — тобто один акаунт, кілька ресурсів усередині).
+
 ## Файлова структура
 
 ```
@@ -51,11 +62,12 @@ faino-clean/
 | Що | Де / Як |
 |----|---------|
 | Хостинг | ✅ GitHub Pages, репозиторій `Daniil4449/faino-clean`, auto-deploy |
-| Домен | ⏳ fainoclean.com.ua (реєстратор Imena.ua, DNS → Cloudflare — Фаза 4) |
+| Домен | ✅ fainoclean.com.ua повністю підключено — DNS через Cloudflare (акаунт cleanandclear4449@gmail.com) |
 | Форма | ✅ Formsubmit.co → cleanandclear4449@gmail.com, POST у прихований iframe |
 | Google Sheets | ✅ "Faino Clean — Ліди" через Apps Script webhook — деталі в context.md |
-| Аналітика GA4 | ⏳ заплановано, ID ще не вставлено |
-| Telegram-бот | ⏳ Фаза 3, через Make.com (окремий бот/номер від Importica) |
+| Аналітика GA4 | ✅ Підключено 24.08.2026. Measurement ID `G-S3F8CCMZS7`, тег gtag.js в `<head>` index.html |
+| Google Search Console | ✅ Верифіковано 24.08.2026 (тип ресурсу "Домен"), sitemap.xml надіслано |
+| Telegram-бот | ✅ Фаза 3 завершена — нова заявка автоматично створює тему в Telegram-групі, через Make.com |
 
 ## Правила
 
