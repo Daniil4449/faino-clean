@@ -144,3 +144,23 @@ DNS домену fainoclean.com.ua переведено на Cloudflare (Free п
 Користувач самостійно створив GA4-властивість "Faino Clean" і потік даних для fainoclean.com.ua (Stream ID `15491639623`), отримав Measurement ID `G-S3F8CCMZS7`. У `index.html` плейсхолдер-коментар `<!-- Google Analytics GA4: підключити після створення GA4-властивості -->` замінено на реальний gtag.js snippet (async-завантаження + `gtag('config', 'G-S3F8CCMZS7')`), вставлено в `<head>` до інших тегів. Закомічено й запушено (`4b584b8`). Верифікація через "Обзор в реальном времени" в GA4 — на користувачі.
 
 **Наступний крок:** Google Search Console (домен готовий, лишилось додати/верифікувати властивість і відправити sitemap.xml).
+
+## 2026-08-24 — Google Search Console верифіковано, sitemap надіслано
+
+Властивість "Домен" `fainoclean.com.ua` верифікована через DNS TXT-запис (автоматично додано інтеграцією Google↔Cloudflare). `sitemap.xml` надіслано, статус одразу після відправки "Not received" — очікувано, обробка займає час.
+
+## 2026-08-24 — Email на домені: Cloudflare Email Routing підключено
+
+Налаштовано прийом пошти на `info@fainoclean.com.ua` → пересилання на `cleanandclear4449@gmail.com` через Cloudflare Email Routing (безкоштовно). Старий конфліктний MX-запис `mail.imena.com.ua` видалено вручну через DNS → Records — без цього кроку Cloudflare відмовлявся автододавати власні MX-записи ("Existing non-Cloudflare MX records conflict"). Тестовий лист на info@ дійшов (спершу в Спам — очікувано для домену без історії надсилань, позначено "Це не спам").
+
+**Обмеження безкоштовного Email Routing:** тільки прийом, не дозволяє відповідати ВІД імені info@fainoclean.com.ua — при натисканні "Ответить" Gmail фізично шле від cleanandclear4449@gmail.com. Повне рішення (Google Workspace, ~$7/міс) відкладено на майбутнє.
+
+## 2026-08-25 — Сесія 9/10: підтверджено брендоване ім'я відправника, GA4/GSC/GSC-статус синхронізовано в CLAUDE.md і context.md
+
+Косметичний фікс з попередньої сесії (Gmail → Налаштування → Облікові записи й імпорт → "Надсилати листи від імені" → "Faino Clean" замість "Daniil Denisyuk") підтверджено реальним тестом: отримувач бачить у заголовку листа "від: Faino Clean <cleanandclear4449@gmail.com>". Sitemap у Search Console дійшов до статусу "Success" (1 сторінка проіндексована) — GSC повністю закрито. `CLAUDE.md` і `context.md` синхронізовано з актуальним станом (GA4, GSC, email на домені, попередження про два Cloudflare-акаунти, правило "усі зміни коду — тільки через Claude Code").
+
+**Реально відкриті пункти зараз:**
+- Google Workspace для info@fainoclean.com.ua (~$7/міс) — щоб відповіді теж йшли від info@
+- Telegram: маршрут "відповідь у темі → приват клієнту"
+- Telegram: команди /start і /help
+- Відкладені hero-блоки (цифри-довіри, згадка поточних клієнтів)

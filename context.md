@@ -1,6 +1,6 @@
 # Faino Clean — Project Knowledge
 
-**Оновлено:** 24.08.2026 (сесія 9 — GA4 підключено, Google Search Console верифіковано і sitemap надіслано)
+**Оновлено:** 25.08.2026 (сесія 10 — підтверджено тестом: ім'я відправника "Faino Clean" реально показується отримувачу; перехід до наступних задач)
 
 ---
 
@@ -10,7 +10,7 @@
 - Сайт: https://fainoclean.com.ua (домен підключено 21.08.2026; https://daniil4449.github.io/faino-clean/ лишається робочим як запасний URL)
 - Домен: fainoclean.com.ua, реєстратор Imena.ua, DNS через Cloudflare — повністю підключено
 - Телефон: +380951915964
-- Email: cleanandclear4449@gmail.com (звичайний Gmail, робочий, поки без окремого домену)
+- Email: cleanandclear4449@gmail.com (основний, робочий, тепер відображається як "Faino Clean" у листах) + info@fainoclean.com.ua (пересилається на cleanandclear4449@gmail.com через Cloudflare Email Routing, з 24.08.2026)
 - Локація: Київ
 - Працює з 2013 року, у Києві — з 2014-го
 - Юрформа: ФОП 3 групи, офіційний договір
@@ -39,13 +39,13 @@
 | Репозиторій | ✅ | github.com/Daniil4449/faino-clean (публічний) |
 | Хостинг | ✅ | GitHub Pages, auto-deploy через GitHub Actions при push в `main` |
 | Домен | ✅ | fainoclean.com.ua повністю підключено (21.08.2026) — DNS через Cloudflare (Free план), Imena.ua лишається реєстратором. Nameservers: donovan.ns.cloudflare.com, isabel.ns.cloudflare.com. |
-| DNS/SSL | ✅ | Cloudflare: 4× A на fainoclean.com.ua → 185.199.108.153, .109.153, .110.153, .111.153 (GitHub Pages, Proxied), CNAME www → daniil4449.github.io (Proxied). Старі записи Imena.ua видалено, MX-запис пошти залишено. SSL-сертифікат від GitHub Pages видано, сайт відкривається без попереджень браузера. |
+| DNS/SSL | ✅ | Cloudflare: 4× A на fainoclean.com.ua → 185.199.108.153, .109.153, .110.153, .111.153 (GitHub Pages, Proxied), CNAME www → daniil4449.github.io (Proxied). Старий MX-запис mail.imena.com.ua видалено 24.08.2026 (конфліктував з Email Routing). SSL-сертифікат від GitHub Pages видано, сайт відкривається без попереджень браузера. |
 | Форма заявки | ✅ | Formsubmit.co (hash-endpoint `e457095c35f1def47c16dc7fafbcc492` → cleanandclear4449@gmail.com), POST у прихований iframe. **Важливий урок (21.08.2026):** активація Formsubmit прив'язана до конкретного домену — при переході з daniil4449.github.io на fainoclean.com.ua знадобилась ПОВТОРНА активація (форма коротко "мовчала", ні email ні Sheets). Переактивовано, перевірено end-to-end на обох каналах одночасно. **Якщо домен ще раз зміниться — очікувати той самий крок.** |
 | Google Sheets (Ліди) | ✅ | "Faino Clean — Ліди" на акаунті cleanandclear4449@gmail.com, через Apps Script webhook |
 | Telegram-бот | ✅ | Фаза 3 завершена — нова заявка автоматично створює тему в групі з даними ліда, перевірено end-to-end (деталі нижче) |
 | Google Analytics GA4 | ✅ | Підключено 24.08.2026. Ресурс "Faino Clean" (акаунт GA cleanandclear4449@gmail.com, той самий, де вже був Importica). Measurement ID: `G-S3F8CCMZS7`. Тег gtag.js вставлений у `<head>` index.html (Claude Code), перевірено на живому сайті. |
-| Google Search Console | ✅ | Верифіковано 24.08.2026 через тип ресурсу "Домен" (не URL-prefix) — DNS TXT-запис, додано автоматично через інтеграцію Google↔Cloudflare. Sitemap `sitemap.xml` надіслано, статус "Not received" одразу після відправки — нормально, обробка займає години-дні. |
-| Email на домені | ⏳ | Заплановано: безкоштовний Cloudflare Email Routing (прийом) одразу після Фази 4; Google Workspace (повноцінна відправка з info@fainoclean.com.ua) — тільки якщо пізніше виправдає ~$7/міс |
+| Google Search Console | ✅ | Верифіковано 24.08.2026 через тип ресурсу "Домен" (не URL-prefix) — DNS TXT-запис, додано автоматично через інтеграцію Google↔Cloudflare. Sitemap `sitemap.xml` надіслано і **успішно оброблено (статус Success, 1 сторінка проіндексована)** — повністю готово. |
+| Email на домені | ✅ | Підключено й перевірено 24.08.2026. Cloudflare Email Routing, акаунт cleanandclear4449@gmail.com. Правило: **info@fainoclean.com.ua → cleanandclear4449@gmail.com** (Active). Тестовий лист дійшов end-to-end (спершу впав у Спам — очікувано для нового домену без історії надсилань — позначили "Це не спам", далі листи йдуть у Вхідні). **Обмеження безкоштовного Email Routing:** він тільки приймає пошту на info@ і пересилає у Gmail — не дозволяє відповідати ВІД імені info@fainoclean.com.ua. Коли натискаєш "Ответить" на вхідний лист, Gmail фізично відправляє від cleanandclear4449@gmail.com (реальна скринька), і клієнт бачить саме цю адресу. **Косметичний фікс (зроблено і ПЕРЕВІРЕНО 24–25.08.2026):** у Gmail → Налаштування → Облікові записи й імпорт → "Надсилати листи від імені" змінено ім'я відправника з "Daniil Denisyuk" на **"Faino Clean"**. Підтверджено реальним тестом: отримувач бачить у заголовку листа "від: Faino Clean <cleanandclear4449@gmail.com>" — адреса лишається gmail, але виглядає брендовано. **Повне рішення (щоб відповіді реально йшли від info@fainoclean.com.ua) — Google Workspace (~$7/міс)**, залишається майбутнім кроком, не зроблено. **Технічна деталь на майбутнє:** старий MX-запис `mail.imena.com.ua` конфліктував з автододаванням DNS Email Routing ("Existing non-Cloudflare MX records conflict") — довелось видалити його вручну через DNS → Records перед тим, як "Add missing records" спрацював. |
 
 ---
 
@@ -145,9 +145,15 @@ function doPost(e) {
 
 - ~~Баг форми~~ — ✅ вирішено 21.08.2026, див. рядок "Форма заявки" в таблиці інфраструктури вище (причина: Formsubmit-активація прив'язана до домену).
 - ~~SSL-сертифікат~~ — ✅ видано, fainoclean.com.ua відкривається без попереджень.
-- ~~Google Search Console / GA4~~ — ✅ обидва завершено 24.08.2026, див. таблицю інфраструктури вище.
+- ~~Google Search Console / GA4~~ — ✅ обидва повністю завершено 24.08.2026 (включно з sitemap: статус Success), див. таблицю інфраструктури вище.
 - ~~Telegram-маршрутизація (Фаза 3)~~ — ✅ завершено 22.08.2026, див. розділ "Telegram-бот" вище.
-- Sitemap у Search Console поки статус "Not received" (щойно надіслано 24.08.2026) — перевірити за кілька днів, чи оброблено.
+- ~~Email на домені (прийом + ім'я відправника)~~ — ✅ завершено й перевірено 24–25.08.2026, див. таблицю інфраструктури вище.
+
+**Реально відкриті пункти зараз:**
+- Google Workspace для info@fainoclean.com.ua (~$7/міс) — щоб ВІДПОВІДІ клієнтам теж йшли від info@, а не від cleanandclear4449@gmail.com. Поки не зроблено, тільки прийом налаштовано.
+- Telegram: маршрут "відповідь у темі → приват клієнту" (reply у топіку → DM ліду)
+- Telegram: команди /start і /help
+- Відкладені hero-блоки: цифри-довіри, згадка поточних клієнтів (чекають рішення користувача)
 
 ---
 
@@ -158,10 +164,12 @@ function doPost(e) {
 3. ✅ Telegram-бот через Make.com — маршрутизація заявок готова й перевірена
 4. ✅ Підключення домену fainoclean.com.ua (Cloudflare DNS) — повністю готово
 5. ✅ GA4 + Google Search Console — підключено й верифіковано 24.08.2026
+6. ✅ Email на домені (Cloudflare Email Routing, прийом на info@ + брендоване ім'я відправника) — підключено й перевірено 24–25.08.2026
 
 **Відкладено користувачем (не забуто, повернутись пізніше):**
 - Великий типографічний блок-цифри-довіри в hero (чекає на більше інформації про компанію)
 - Чесне формулювання про поточного клієнта (фонд/готелі/промислові об'єкти без назв) — хоче спершу побачити на маківці/сайті
+- Google Workspace для повноцінного надсилання від info@fainoclean.com.ua (~$7/міс)
 
 ---
 

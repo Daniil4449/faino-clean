@@ -66,8 +66,9 @@ faino-clean/
 | Форма | ✅ Formsubmit.co → cleanandclear4449@gmail.com, POST у прихований iframe |
 | Google Sheets | ✅ "Faino Clean — Ліди" через Apps Script webhook — деталі в context.md |
 | Аналітика GA4 | ✅ Підключено 24.08.2026. Measurement ID `G-S3F8CCMZS7`, тег gtag.js в `<head>` index.html |
-| Google Search Console | ✅ Верифіковано 24.08.2026 (тип ресурсу "Домен"), sitemap.xml надіслано |
+| Google Search Console | ✅ Верифіковано 24.08.2026 (тип ресурсу "Домен"), sitemap.xml надіслано і успішно оброблено (Success) |
 | Telegram-бот | ✅ Фаза 3 завершена — нова заявка автоматично створює тему в Telegram-групі, через Make.com |
+| Email на домені | ✅ Підключено й перевірено 24–25.08.2026. Cloudflare Email Routing: info@fainoclean.com.ua → cleanandclear4449@gmail.com. Ім'я відправника в Gmail змінено на "Faino Clean". Повноцінна відправка ВІД info@ вимагає Google Workspace (~$7/міс) — ще не зроблено, деталі в context.md |
 
 ## Правила
 
