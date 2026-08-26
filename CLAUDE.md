@@ -10,6 +10,13 @@
 
 **Це окремий, незалежний проєкт** — не форк і не похідна від `Daniil4449/importica`. Деякі інфраструктурні патерни (SEO-теги, GitHub Pages деплой, Formsubmit) підглянуті звідти як перевірений підхід, але дизайн і контент — власні, під затверджену дизайн-систему Faino Clean.
 
+## ⚠️ Два окремі акаунти Cloudflare — не переплутати
+
+- **daniilka4449@gmail.com** (особиста пошта) → домен **importica.com.ua** (проєкт Importica)
+- **cleanandclear4449@gmail.com** (бізнес-пошта Faino Clean) → домен **fainoclean.com.ua**
+
+Той самий поділ і в Google-акаунтах для GA4/Search Console — обидва сервіси Faino Clean підключені на **cleanandclear4449@gmail.com** (той самий Google-акаунт, де вже був ресурс Importica — тобто один акаунт, кілька ресурсів усередині).
+
 ## Файлова структура
 
 ```
