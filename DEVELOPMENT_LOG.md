@@ -266,3 +266,5 @@ DNS домену fainoclean.com.ua переведено на Cloudflare (Free п
 - `apple-touch-icon` лишається SVG (iOS може не показати на Home Screen) — на машині немає інструментів SVG→PNG (ні ImageMagick, ні Node, ні робочого Python); той самий блокер, що й у сесії з og-image.png, PNG-версію тоді довелось рендерити через headless-браузер (canvas). Можна повторити той самий прийом за окремим запитом.
 
 **Все інше на сайті — без зауважень:** консоль чиста, всі статичні файли віддають 200, обидві форми і модалка вакансій працюють коректно, GA4 активний, немає horizontal overflow на мобільному й десктопі.
+
+**HTTPS-редірект закрито того ж дня.** Користувач самостійно зайшов у Cloudflare (`cleanandclear4449@gmail.com` → домен `fainoclean.com.ua` → SSL/TLS → Edge Certificates) і увімкнув **"Always Use HTTPS"**. Перевірено повторно через headless-браузер: `http://fainoclean.com.ua` тепер коректно редіректить на `https://fainoclean.com.ua`. Redirect loop (про який попереджав Cloudflare) не виник, бо GitHub Pages сам не форсує http→https. Пункт закрито повністю.
