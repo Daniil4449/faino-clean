@@ -1,6 +1,6 @@
 # Faino Clean — Project Knowledge
 
-**Оновлено:** 26.08.2026 (сесія 14 — двосторонній Telegram-бот (сценарій Make.com `6935862`) протестовано наживо, знайдено й виправлено 3 баги; `CLAUDE.md` замінено повністю окремою Cowork-сесією — новий поділ обов'язків: Claude Code веде файли репозиторію, Cowork-сесія веде Make.com/Google Sheets/DNS/GA4 і синхронізує сюди, у `context.md`)
+**Оновлено:** 26.08.2026 (сесія 15 — повний аудит живого сайту через Claude Code: знайдено й закрито відсутність HTTPS-редіректу на Cloudflare, оновлено `sitemap.xml`; продовження сесії 14 — двосторонній Telegram-бот (сценарій Make.com `6935862`) протестовано наживо, знайдено й виправлено 3 баги; `CLAUDE.md` замінено повністю окремою Cowork-сесією — поділ обов'язків: Claude Code веде файли репозиторію, Cowork-сесія веде Make.com/Google Sheets/DNS/GA4 і синхронізує сюди, у `context.md`)
 
 ---
 
@@ -39,7 +39,7 @@
 | Репозиторій | ✅ | github.com/Daniil4449/faino-clean (публічний) |
 | Хостинг | ✅ | GitHub Pages, auto-deploy через GitHub Actions при push в `main` |
 | Домен | ✅ | fainoclean.com.ua повністю підключено (21.08.2026) — DNS через Cloudflare (Free план), Imena.ua лишається реєстратором. Nameservers: donovan.ns.cloudflare.com, isabel.ns.cloudflare.com. |
-| DNS/SSL | ✅ | Cloudflare: 4× A на fainoclean.com.ua → 185.199.108.153, .109.153, .110.153, .111.153 (GitHub Pages, Proxied), CNAME www → daniil4449.github.io (Proxied). Старий MX-запис mail.imena.com.ua видалено 24.08.2026 (конфліктував з Email Routing). SSL-сертифікат від GitHub Pages видано, сайт відкривається без попереджень браузера. |
+| DNS/SSL | ✅ | Cloudflare: 4× A на fainoclean.com.ua → 185.199.108.153, .109.153, .110.153, .111.153 (GitHub Pages, Proxied), CNAME www → daniil4449.github.io (Proxied). Старий MX-запис mail.imena.com.ua видалено 24.08.2026 (конфліктував з Email Routing). SSL-сертифікат від GitHub Pages видано, сайт відкривається без попереджень браузера. **"Always Use HTTPS" увімкнено 26.08.2026** (SSL/TLS → Edge Certificates) — до цього `http://fainoclean.com.ua` (без www) не апгрейдився на https; знайдено аудитом, виправлено користувачем у Cloudflare, перевірено повторно — редірект працює, redirect loop не виник. |
 | Форма заявки | ✅ | Formsubmit.co (hash-endpoint `e457095c35f1def47c16dc7fafbcc492` → cleanandclear4449@gmail.com), POST у прихований iframe. **Важливий урок (21.08.2026):** активація Formsubmit прив'язана до конкретного домену — при переході з daniil4449.github.io на fainoclean.com.ua знадобилась ПОВТОРНА активація (форма коротко "мовчала", ні email ні Sheets). Переактивовано, перевірено end-to-end на обох каналах одночасно. **Якщо домен ще раз зміниться — очікувати той самий крок.** |
 | Google Sheets (Ліди) | ✅ | "Faino Clean — Ліди" на акаунті cleanandclear4449@gmail.com, через Apps Script webhook |
 | Telegram-бот (заявки з форми) | ✅ | Фаза 3 завершена — нова заявка автоматично створює тему в групі з даними ліда, перевірено end-to-end (деталі нижче) |
@@ -110,6 +110,22 @@ function doPost(e) {
 **Не підтверджено:** гілка "адмін відповідає в темі → клієнт отримує приватний DM" — технічно готова й полагоджена (той самий фікс бага №3 її стосується), але жодного живого повідомлення в цьому напрямку ще не надіслано.
 
 **Статус:** сценарій toggle OFF, Sequential processing = Yes, черга вебхука порожня. Активація — після підтвердження гілки "адмін → клієнт". Повний опис і технічні прийоми — `DEVELOPMENT_LOG.md`, сесія 14.
+
+---
+
+## Повний аудит сайту (26.08.2026, сесія 15)
+
+Claude Code провів наскрізну перевірку живого `fainoclean.com.ua` через headless-браузер (не лише коду): консоль, мережеві запити, SEO-теги, JSON-LD, обидві форми, модалка вакансій, адаптивність (375px/1280px), GA4, статичні файли, tel:/mailto:, поведінка доменних редиректів (http/https, www/non-www, GitHub Pages fallback).
+
+**Знайдено і закрито:** `http://fainoclean.com.ua` (без www, без https) не апгрейдився на HTTPS — ні напряму, ні через власний редірект GitHub Pages (резервний `daniil4449.github.io/faino-clean` теж приземлявся на незашифрований http). Причина — вимкнений перемикач у Cloudflare. Користувач сам увімкнув **SSL/TLS → Edge Certificates → "Always Use HTTPS"**, перевірено повторно — тепер `http://` коректно редіректить на `https://fainoclean.com.ua`, зациклення не було (GitHub Pages сам не форсує https, тому конфлікту з попередженням Cloudflare про redirect loop не виникло).
+
+**Виправлено в коді:** `sitemap.xml` — `lastmod` оновлено на `2026-08-26` (був застарілий `2026-08-08`).
+
+**Свідомо не чіпали (не блокує, не критично):**
+- Webhook URL Google Sheets і Make.com видно у вихідному коді сторінки (клієнтський `fetch`) — теоретичний спам-вектор в обхід форми. Архітектурна особливість безсерверного підходу (як в Importica), не швидкий фікс.
+- `apple-touch-icon` лишається SVG (iOS може не показати на Home Screen) — на машині Claude Code немає інструментів SVG→PNG (ні ImageMagick, ні Node, ні робочого Python). Той самий блокер, що й при генерації `og-image.png` (тоді обійшли рендером через headless-браузер/canvas) — можна повторити прийом за окремим запитом.
+
+**Все інше — без зауважень:** консоль чиста, всі статичні файли (favicon/og-image/logo/robots/sitemap) віддають 200, обидві форми і модалка вакансій працюють коректно, GA4 активний, немає horizontal overflow на мобільному й десктопі. Повний хід перевірки — `DEVELOPMENT_LOG.md`, запис 26.08.2026.
 
 ---
 
