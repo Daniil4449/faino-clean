@@ -34,7 +34,7 @@
 {"@context":"https://schema.org","@type":"JobPosting","title":"Працівник кухні","description":"Допомога в підготовці продуктів, підтримання чистоти й порядку в робочій зоні кухні, виконання доручень кухонної команди. Досвід вітається, але не обов'язковий — навчаємо на місці.","datePosted":"2026-08-25","validThrough":"2026-11-25","employmentType":"FULL_TIME","hiringOrganization":{"@type":"Organization","name":"Faino Clean","sameAs":"https://fainoclean.com.ua"},"jobLocation":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality":"Київ","addressCountry":"UA"}}}
 </script>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -665,7 +665,6 @@ const frame = document.querySelector('iframe[name="fs-frame"]');
 const submitBtn = form.querySelector('button[type="submit"]');
 const submitBtnText = submitBtn.textContent;
 const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbx_i2C8fhK9aeZoHFoESG6Ze_sm-Rplt13OTlN6eo5hfSvCMt93GtsLn8YId7VbPwGQ/exec';
-const TELEGRAM_WEBHOOK = 'https://hook.eu1.make.com/o1kr4v95snvbdhg7okdt6pgq6km5jnx1';
 let submitted = false;
 let submittedFormType = null; // 'contact' | 'vacancy' — same hidden iframe is shared by both forms
 form.addEventListener('submit', (e) => {
@@ -687,10 +686,6 @@ form.addEventListener('submit', (e) => {
     comment: document.getElementById('f-msg').value
   };
   fetch(SHEETS_WEBHOOK, { method: 'POST', mode: 'no-cors', body: JSON.stringify(leadData) }).catch(() => {});
-  // Make.com's webhook needs application/x-www-form-urlencoded (the only
-  // Content-Type a no-cors fetch can actually send) to parse named fields —
-  // JSON.stringify() defaults to text/plain, which arrives as an empty body.
-  fetch(TELEGRAM_WEBHOOK, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(leadData) }).catch(() => {});
   if (typeof gtag === 'function') gtag('event', 'generate_lead', { form: 'contact' });
 
   // Re-enable after the submission has had time to go through, so a visitor
@@ -754,7 +749,6 @@ vacancyForm.addEventListener('submit', (e) => {
     comment: document.getElementById('v-msg').value
   };
   fetch(SHEETS_WEBHOOK, { method: 'POST', mode: 'no-cors', body: JSON.stringify(leadData) }).catch(() => {});
-  fetch(TELEGRAM_WEBHOOK, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(leadData) }).catch(() => {});
   if (typeof gtag === 'function') gtag('event', 'generate_lead', { form: 'vacancy', position });
 
   setTimeout(() => {

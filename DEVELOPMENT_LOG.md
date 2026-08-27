@@ -268,3 +268,16 @@ DNS домену fainoclean.com.ua переведено на Cloudflare (Free п
 **Все інше на сайті — без зауважень:** консоль чиста, всі статичні файли віддають 200, обидві форми і модалка вакансій працюють коректно, GA4 активний, немає horizontal overflow на мобільному й десктопі.
 
 **HTTPS-редірект закрито того ж дня.** Користувач самостійно зайшов у Cloudflare (`cleanandclear4449@gmail.com` → домен `fainoclean.com.ua` → SSL/TLS → Edge Certificates) і увімкнув **"Always Use HTTPS"**. Перевірено повторно через headless-браузер: `http://fainoclean.com.ua` тепер коректно редіректить на `https://fainoclean.com.ua`. Redirect loop (про який попереджав Cloudflare) не виник, бо GitHub Pages сам не форсує http→https. Пункт закрито повністю.
+
+## 2026-08-26 — Прибрано мертвий Telegram-код (Make.com webhook)
+
+З 26.08.2026 доставка заявок у Telegram повністю переведена на Apps Script (`doPost` → пише в Google Sheets → звідти запускає Telegram-сповіщення), старий сценарій Make.com видалено. Через це `TELEGRAM_WEBHOOK` в `index.html` бив у неіснуючий вебхук і не робив нічого корисного. Прибрано з коду:
+- оголошення `const TELEGRAM_WEBHOOK = '...'`
+- виклик `fetch(TELEGRAM_WEBHOOK, ...)` в обробнику контактної форми, разом із коментарем, що пояснював вибір `URLSearchParams` саме для цього виклику (втратив сенс)
+- той самий виклик `fetch(TELEGRAM_WEBHOOK, ...)` в обробнику форми вакансій
+
+`fetch(SHEETS_WEBHOOK, ...)` в обох формах не чіпали — це єдиний робочий канал заявок зараз.
+
+## 2026-08-27 — apple-touch-icon: PNG замість SVG
+
+Закрито пункт з аудиту сесії 15 (`apple-touch-icon` був SVG — iOS не гарантує рендер такого формату для Home Screen). Користувач підготував і поклав готовий `apple-touch-icon.png` (180×180) в `E:\Завантаження`; скопійовано в корінь репозиторію, `<link rel="apple-touch-icon" href="favicon.svg">` замінено на `href="apple-touch-icon.png"`.
